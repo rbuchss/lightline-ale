@@ -76,12 +76,13 @@ function! lightline#ale#ok() abort
     return ''
   endif
   let l:counts = ale#statusline#Count(bufnr(''))
-  return l:counts.total == 0 ? '' : printf(
+  return l:counts.total == 0 ? printf(
     \   '%s%s%s',
     \   s:indicator_left_pad_ok,
     \   s:indicator_ok,
     \   s:indicator_right_pad_ok
     \ )
+    \ : ''
 endfunction
 
 function! lightline#ale#checking() abort
