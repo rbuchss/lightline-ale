@@ -3,6 +3,7 @@ let s:indicator_warnings = get(g:, 'lightline#ale#indicator_warnings', 'W: ')
 let s:indicator_errors = get(g:, 'lightline#ale#indicator_errors', 'E: ')
 let s:indicator_ok = get(g:, 'lightline#ale#indicator_ok', 'OK')
 let s:indicator_checking = get(g:, 'lightline#ale#indicator_checking', 'Linting...')
+let s:indicator_no_linters = get(g:, 'lightline#ale#indicator_no_linters', 'N/A')
 
 " Optional left and right padding to add to the indicator.
 " This is useful when using wider indicator characters that
@@ -14,12 +15,14 @@ let s:indicator_left_pad_warnings = get(g:, 'lightline#ale#indicator_left_pad_wa
 let s:indicator_left_pad_errors = get(g:, 'lightline#ale#indicator_left_pad_errors', '')
 let s:indicator_left_pad_ok = get(g:, 'lightline#ale#indicator_left_pad_ok', '')
 let s:indicator_left_pad_checking = get(g:, 'lightline#ale#indicator_left_pad_checking', '')
+let s:indicator_left_pad_no_linters = get(g:, 'lightline#ale#indicator_left_pad_no_linters', '')
 
 let s:indicator_right_pad_infos = get(g:, 'lightline#ale#indicator_right_pad_infos', '')
 let s:indicator_right_pad_warnings = get(g:, 'lightline#ale#indicator_right_pad_warnings', '')
 let s:indicator_right_pad_errors = get(g:, 'lightline#ale#indicator_right_pad_errors', '')
 let s:indicator_right_pad_ok = get(g:, 'lightline#ale#indicator_right_pad_ok', '')
 let s:indicator_right_pad_checking = get(g:, 'lightline#ale#indicator_right_pad_checking', '')
+let s:indicator_right_pad_no_linters = get(g:, 'lightline#ale#indicator_right_pad_no_linters', '')
 
 """"""""""""""""""""""
 " Lightline components
@@ -92,6 +95,16 @@ function! lightline#ale#checking() abort
     \ : ''
 endfunction
 
+function! lightline#ale#no_linters() abort
+  return empty(ale#linter#Get(&filetype))
+    \ ? printf(
+    \   '%s%s%s',
+    \   s:indicator_left_pad_no_linters,
+    \   s:indicator_no_linters,
+    \   s:indicator_right_pad_no_linters
+    \ )
+    \ : ''
+endfunction
 
 """"""""""""""""""
 " Helper functions
