@@ -4,7 +4,6 @@ let s:indicator_errors = get(g:, 'lightline#ale#indicator_errors', 'E: ')
 let s:indicator_ok = get(g:, 'lightline#ale#indicator_ok', 'OK')
 let s:indicator_checking = get(g:, 'lightline#ale#indicator_checking', 'Linting...')
 
-
 """"""""""""""""""""""
 " Lightline components
 
@@ -56,3 +55,22 @@ function! lightline#ale#linted() abort
     \ && getbufvar(bufnr(''), 'ale_linted', 0) > 0
     \ && ale#engine#IsCheckingBuffer(bufnr('')) == 0
 endfunction
+
+function! lightline#ale#indicator_with_padding(indicator) abort
+  " Used to add space padding if the indicator charaters are wide.
+  let display_width = strdisplaywidth(a:indicator)
+  let char_count = strchars(a:indicator)
+
+  " Return indicator, with extra space if width >= 2
+  if display_width > char_count
+    return a:indicator . ' '
+  else
+    return a:indicator
+  endif
+endfunction
+
+let s:indicator_infos = lightline#ale#indicator_with_padding(s:indicator_infos)
+let s:indicator_warnings = lightline#ale#indicator_with_padding(s:indicator_warnings)
+let s:indicator_errors = lightline#ale#indicator_with_padding(s:indicator_errors)
+let s:indicator_ok = lightline#ale#indicator_with_padding(s:indicator_ok)
+let s:indicator_checking = lightline#ale#indicator_with_padding(s:indicator_checking)
